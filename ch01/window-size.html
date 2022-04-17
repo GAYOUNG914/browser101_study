@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .tag{
+            display: inline-block;
+            background-color: thistle;
+            padding: 16px;
+            margin-top: 16px;
+            font-size: 48px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="tag">Window Size</div>
+    <script>
+        const tag = document.querySelector('.tag');
+        function updateTag(){
+            tag.innerHTML = `
+            window.screen: ${window.screen.width}, ${window.screen.height} <br />
+            window.outer: ${window.outerWidth}, ${window.outerHeight} <br />
+            window.inner: ${window.innerWidth}, ${window.innerHeight} <br />
+            documentElement.clientWidth: ${document.documentElement.clientWidth}, ${document.documentElement.clientHeight}
+            `;
+            //string template : `${}` 를 사용하여 동적으로 값을 받아 옴
+        }
+        window.addEventListener('resize', () => { //event를 사용할 때는 event 매개변수(파라미터)가 들어오게 되고, 보통 이 매개변수를 사용함
+            updateTag();
+        });
+        updateTag(); //함수 실행 해놓지 않으면 창을 켰을 떄 처음에 .tag의 컨텐츠인 window size 텍스트만 보임. 윈도우 resize를 해야 innerHTML 내용이 보임.
+        
+    </script>
+</body>
+</html>

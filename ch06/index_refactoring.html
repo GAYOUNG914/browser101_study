@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{margin: 0; padding: 0;}
+        body{
+            display: flex;
+            justify-content: center;
+        }
+        .wrap{
+            display: flex;
+            flex-direction: column;
+            /* justify-content: space-between; */
+            /* align-items: center; */
+            position: relative;
+            padding: 20px;
+            margin-top: 150px; 
+            background: lightcoral;
+            width: 250px;
+            /* height: 700px; */
+            border-radius: 30px;
+        }
+        .textWrap,.inputWrap{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            background: white;
+            border-radius: 10px;
+            width: 92%;
+            height: auto;
+            padding: 10px;
+        }
+        .item{
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .trashcan,.ok{
+            width: 20px;
+            height: 20px;
+            background: black;
+        }
+        .textWrap:last-child{
+            margin-bottom: 0;
+        }
+        .inputWrap{
+            width: 92%;
+            background: none;
+            /* position: absolute;
+            left: 20px;
+            bottom: 20px; */
+        }
+        #textinput{ width: 100%;}
+        .ok{
+            padding: 10px;
+            margin-left: 20px;
+            background: purple;
+        }
+
+        ul{
+            height: 500px;
+            overflow-y: auto;
+            
+        }
+    </style>
+</head>
+
+<body>
+    <section class="wrap">
+        <ul>
+           
+        </ul>
+        
+        <footer class="inputWrap">
+            <form class="new-form">
+                <input type="text" id="textinput">
+                <button type="submit" class="ok"></button>
+            </form>
+        </footer>
+        
+    </section>
+    <script>
+        const items = document.querySelector('ul');
+        const form = document.querySelector('.new-form');
+        const ok = document.querySelector('.ok');
+        const textinput = document.querySelector('#textinput');
+
+        
+        function onAdd(){
+            //코드 주석을 쓸 때는 '왜'를 쓰면 좋음. 1.~5.의 주석은 좋은 주석이 아님.
+            //1. 사용자가 입력한 텍스트 받아오기
+            const text = textinput.value;
+            console.log(text);
+            if(text == ''){
+                textinput.focus();
+                return;
+            }
+            //2. 새로운 아이템을 만듦(텍스트 + 삭제버튼)
+            const item = createItem(text);
+            //3. ul 컨테이너 안에 새로만든 아이템 추가
+            items.append(item)
+            //4. 새로 추가된 아이템으로 스크롤링
+            item.scrollIntoView({ block:'center'});
+            //5. 인풋 초기화
+            textinput.value = '';
+            textinput.focus();
+        };
+
+        let id= 0; //사실 id의 숫자를 하나씩 증가시켜서 임의의 id를 부여시켜주는 것 보다 UUID 같은 걸로 하나씩 고유한 아이디를 붙여주는 것이 좋다.
+        function createItem(text){
+            const itemRow = document.createElement('li'); //innerHTMl과 다른 점은 createElement가 요소를 동적으로 다룰 수 있다는 것
+            itemRow.setAttribute('class' , 'textWrap'); //class 붙여줘야 태그가 생성될 때 그 css 가 먹음. 당연함.
+            itemRow.setAttribute('data-id', id);
+            itemRow.innerHTML=`
+            <div class="item">
+                <span class="text">${text}</span>
+                <button class="trashcan" data-id=${id}></button>
+            </div>
+            `
+            id++;
+            return itemRow; //itemRow 값을 리턴시켜서 뱉어 내줘야 화면에 나타남
+        };
+
+        form.addEventListener('submit', event=>{
+            event.preventDefault(); //페이지 자동로딩(submit 속성의 특징)막기 위함
+            onAdd();
+        });
+
+        //form tag를 사용하므로써 아래 과정이 필요가 없음
+
+        // ok.addEventListener('click', ()=>{
+        //     onAdd();
+        // });
+
+        // textinput.addEventListener('keydown', event=>{ //keypress enter을 하면 onAdd() 함수가 콜백되도록
+        //     //keypress 이벤트는 더 이상 사용하지 않는 이벤트임
+        //     //keydown(키 누르고있을 때의 상태), keyup(눌렀다가 뗐을 때의 상태) 등의 이벤트를 사용하는 것이 좋다.
+        //     //mdn 참고하면 됨
+        //     //keydown -> event.isComposing 이벤트는 keydown이 발생하는 중간에 발생하는 이벤트는 무시하는 이벤트임.
+        //     if(event.isComposing){
+        //         return;
+        //     }
+        //     if(event.key === 'Enter'){
+        //         onAdd();
+        //     }
+            
+        // });
+
+        items.addEventListener('click', event=>{
+            const id= event.target.dataset.id;
+            if(id){
+                const toBeDeleted = document.querySelector(`.textWrap[data-id="${id}"]`);
+                toBeDeleted.remove();
+            }
+        });
+    </script>
+</body>
+</html>

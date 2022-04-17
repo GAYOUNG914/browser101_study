@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>event_deligaiton</title>
+    <style>
+        li.selected{ background: yellow;}
+    </style>
+</head>
+<body>
+    <ul>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+        <li>7</li>
+        <li>8</li>
+        <li>9</li>
+        <li>10</li>
+    </ul>
+    <script>
+        const ul = document.querySelector('ul');
+        ul.addEventListener('click', (event)=>{
+            // console.log(event)
+            // console.log(event.target)
+            // console.log(event.target.tagName)
+            if( event.target.tagName == 'LI'){
+                event.target.classList.add('selected');
+            }
+        });
+
+        //같은 요소에 같은 이벤트를 여러개 등록하고 싶다면 그냥 부모요소에다 이벤트 등록을 하면 됨
+    </script>
+</body>
+</html>

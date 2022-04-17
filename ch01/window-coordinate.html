@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* .wrap{
+            position: relative;
+        } */
+        .box{
+            width: 60px;
+            height: 60px;
+            background: #ddd;
+            margin-bottom: 20px;
+        }
+        .grey{
+            background: purple;
+        }
+        /* .figure{
+            display: inline-block;
+            width: 20%;
+            height: 100%;
+            background: red;
+            color: black;
+            position: absolute;
+            right: 30px;
+            top: 30px;
+        } */
+        aside {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- <div class="wrap"> -->
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box grey"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box grey"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box grey"></div>
+        <!-- <div class="figure"></div> -->
+        <aside>
+            <button class="scrollBy">scroll by 100px(y)</button>
+            <button class="scrollTo">scroll to 100px(y)</button>
+            <button class="scrollInto">scroll into special</button>
+        </aside>
+        
+    <!-- </div> -->
+    <script>
+        // let box = document.querySelector('.box');
+        // let grey = document.querySelector('.grey');
+        // let figure = document.querySelector('.figure');
+
+        // let screen = (e)=>{
+        //     figure.innerHTML = `<div>screenX, Y: (${e.screenX}, ${e.screenY})</div>`;
+        // };
+
+        // let client = (e)=>{
+        //     figure.innerHTML += `<div>clientX, Y: (${e.clientX}, ${e.clientY})</div>`;
+        // };
+
+        // let  page = (e)=>{
+        //     figure.innerHTML += `<div>pageX, Y: (${e.pageX}, ${e.pageY})</div>`;
+        // }
+        // let offset = (e)=>{
+        //     figure.innerHTML += `<div>offsetX, Y: (${e.offsetX}, ${e.offsetY})</div>`;
+        // }
+        
+        
+        // grey.addEventListener('click' , function(e){
+        //     const rect = grey.getBoundingClientRect();
+        //     console.log(rect);
+            
+        //     screen(e);
+        //     client(e);
+        //     page(e);
+        //     offset(e);
+        // });
+
+
+        const grey = document.querySelector('.grey');
+        grey.addEventListener('click', event=> {
+            const rect = grey.getBoundingClientRect();
+            console.log(rect);
+            console.log(`client: ${event.clientX}, ${event.clientY}`);
+            console.log(`page: ${event.pageX}, ${event.pageY}`);
+        });
+
+        const scrollBy = document.querySelector('.scrollBy');
+        const scrollTo = document.querySelector('.scrollTo');
+        const scrollInto = document.querySelector('.scrollInto');
+
+        scrollBy.addEventListener('click', ()=>{ //y축 100px 씩 이동
+            // window.scrollBy(0, 100)
+            window.scrollBy({
+                top: 100,
+                left: 100,
+                behavior: 'smooth'
+            });
+        });
+
+        scrollTo.addEventListener('click', ()=>{ //y 좌표가 100px 인 곳으로 이동
+            window.scrollTo(0, 100)
+        });
+        scrollInto.addEventListener('click', ()=>{ //grey가 있는 곳으로 이동
+            grey.scrollIntoView()
+        });
+
+
+    </script>
+</body>
+</html>
